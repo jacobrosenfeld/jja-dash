@@ -4,9 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Item } from '@/lib/types';
+import Footer from '@/components/Footer';
 
 export default function Dashboard() {
   const [items, setItems] = useState<Item[]>([]);
+
+  const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME;
+  const dashboardTitle = companyName ? `${companyName} Dashboard` : 'Intranet Dashboard';
 
   useEffect(() => {
     fetch('/api/items')
@@ -20,7 +24,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Intranet Dashboard
+            {dashboardTitle}
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Your centralized hub for all internal tools and applications
@@ -101,6 +105,7 @@ export default function Dashboard() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

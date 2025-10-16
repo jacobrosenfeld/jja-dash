@@ -3,11 +3,15 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Item } from '@/lib/types';
+import Footer from '@/components/Footer';
 
 export default function Admin() {
   const [items, setItems] = useState<Item[]>([]);
   const [form, setForm] = useState({ title: '', subtitle: '', link: '', image: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME;
+  const dashboardTitle = companyName ? `${companyName} Dashboard` : 'Intranet Dashboard';
 
   useEffect(() => {
     fetchItems();
@@ -49,7 +53,7 @@ export default function Admin() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Admin Panel
+            {dashboardTitle} - Admin Panel
           </h1>
           <p className="text-lg text-gray-600">
             Manage your intranet dashboard tools and applications
@@ -220,6 +224,7 @@ export default function Admin() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

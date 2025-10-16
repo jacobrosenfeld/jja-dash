@@ -9,12 +9,15 @@ A modern intranet dashboard for quick access to internal apps and tools, built w
 - **Vercel Blob Storage**: Cost-efficient storage for dashboard data
 - **Responsive Design**: Works on desktop and mobile devices
 
-## Tech Stack
+## Branding
 
-- **Framework**: Next.js 15 with App Router
-- **Styling**: Tailwind CSS
-- **Storage**: Vercel Blob
-- **Language**: TypeScript
+Customize the dashboard with your company branding using environment variables:
+
+- `NEXT_PUBLIC_COMPANY_NAME`: Replaces "Intranet Dashboard" with "[Company Name] Dashboard"
+- `NEXT_PUBLIC_COMPANY_SHORT_CODE`: Used in the copyright footer (e.g., "JJA")
+- `NEXT_PUBLIC_SUPPORT_EMAIL`: Email address for the "Contact Support" link
+
+Copy `.env.example` to `.env.local` and customize these values for your organization.
 
 ## Getting Started
 
@@ -37,9 +40,15 @@ npm install
 ```
 
 3. Set up environment variables:
-Create a `.env.local` file in the root directory and add your Vercel Blob token:
+Create a `.env.local` file in the root directory and add your Vercel Blob token and branding configuration:
 ```env
+# Required for functionality
 BLOB_READ_WRITE_TOKEN=your_blob_token_here
+
+# Branding (optional - defaults will be used if not set)
+NEXT_PUBLIC_COMPANY_NAME=Joseph Jacobs & Associates
+NEXT_PUBLIC_COMPANY_SHORT_CODE=JJA
+NEXT_PUBLIC_SUPPORT_EMAIL=admin@josephjacobs.org
 ```
 
 To get a Vercel Blob token:
