@@ -19,19 +19,20 @@ The dashboard is password-protected with two access levels:
 ### Environment Variables
 
 ```env
-# User password (dashboard access)
-NEXT_PUBLIC_USER_PASSWORD=password123
+# Authentication (Server-side only - secure)
+# Password for regular users (access to dashboard)
+USER_PASSWORD=password123
 
-# Admin password (dashboard + admin panel access)
-NEXT_PUBLIC_ADMIN_PASSWORD=admin123
+# Password for admin users (access to dashboard + admin panel)
+ADMIN_PASSWORD=admin123
 ```
 
-### Access Levels
+### Security Notes
 
-- Enter the user password to access the dashboard
-- Enter the admin password to access both dashboard and admin panel
-- Authentication is stored in browser localStorage
-- Users must log in to access any part of the application
+- Passwords are stored server-side only and are not exposed to client-side code
+- Authentication is handled via secure API endpoints
+- Passwords are never transmitted in plain text in client-side environment variables
+- Authentication state is managed client-side via localStorage for session persistence
 
 ## Getting Started
 

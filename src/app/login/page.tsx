@@ -25,7 +25,8 @@ export default function Login() {
     setIsSubmitting(true);
     setError('');
 
-    if (login(password)) {
+    const success = await login(password);
+    if (success) {
       router.push('/');
     } else {
       setError('Invalid password. Please try again.');

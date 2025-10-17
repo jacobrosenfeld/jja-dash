@@ -6,7 +6,7 @@ type AuthLevel = 'none' | 'user' | 'admin';
 
 interface AuthContextType {
   authLevel: AuthLevel;
-  login: (password: string) => boolean;
+  login: (password: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -26,20 +26,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = (password: string): boolean => {
-    const userPassword = process.env.NEXT_PUBLIC_USER_PASSWORD;
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+  const login = async (password: string): Promise<boolean> => {
+    try {
+      const response = await fetch('/api/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
 
-    if (password === adminPassword) {
-      setAuthLevel('admin');
-      localStorage.setItem('authLevel', 'admin');
-      return true;
-    } else if (password === userPassword) {
-      setAuthLevel('user');
-      localStorage.setItem('authLevel', 'user');
-      return true;
+      if (response.ok) {
+        const data = await response.json();
+        setAuthLevel(data.level);
+        localStorage.setItem('authLevel', data.level);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
     }
-    return false;
   };
 
   const logout = () => {
