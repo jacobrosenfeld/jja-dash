@@ -16,7 +16,7 @@ async function getItems(): Promise<Item[]> {
 }
 
 async function saveItems(items: Item[]) {
-  await put(BLOB_KEY, JSON.stringify(items), { access: 'public' });
+  await put(BLOB_KEY, JSON.stringify(items), { access: 'public', allowOverwrite: true });
 }
 
 export async function GET() {
