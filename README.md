@@ -9,15 +9,29 @@ A modern intranet dashboard for quick access to internal apps and tools, built w
 - **Vercel Blob Storage**: Cost-efficient storage for dashboard data
 - **Responsive Design**: Works on desktop and mobile devices
 
-## Branding
+## Authentication
 
-Customize the dashboard with your company branding using environment variables:
+The dashboard is password-protected with two access levels:
 
-- `NEXT_PUBLIC_COMPANY_NAME`: Replaces "Intranet Dashboard" with "[Company Name] Dashboard"
-- `NEXT_PUBLIC_COMPANY_SHORT_CODE`: Used in the copyright footer (e.g., "JJA")
-- `NEXT_PUBLIC_SUPPORT_EMAIL`: Email address for the "Contact Support" link
+- **User Access**: Can view the dashboard and launch applications
+- **Admin Access**: Can view dashboard + access admin panel to add/delete tools
 
-Copy `.env.example` to `.env.local` and customize these values for your organization.
+### Environment Variables
+
+```env
+# User password (dashboard access)
+NEXT_PUBLIC_USER_PASSWORD=password123
+
+# Admin password (dashboard + admin panel access)
+NEXT_PUBLIC_ADMIN_PASSWORD=admin123
+```
+
+### Access Levels
+
+- Enter the user password to access the dashboard
+- Enter the admin password to access both dashboard and admin panel
+- Authentication is stored in browser localStorage
+- Users must log in to access any part of the application
 
 ## Getting Started
 

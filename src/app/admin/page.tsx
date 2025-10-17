@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Item } from '@/lib/types';
 import Footer from '@/components/Footer';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { useAuth } from '@/lib/auth';
 
-export default function Admin() {
+function AdminContent() {
   const [items, setItems] = useState<Item[]>([]);
   const [form, setForm] = useState({ title: '', subtitle: '', link: '', image: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { logout } = useAuth();
 
   const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME;
   const dashboardTitle = companyName ? `${companyName} Dashboard` : 'Intranet Dashboard';
@@ -136,7 +139,7 @@ export default function Admin() {
                   className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {isSubmitting ? (
-                    <span className="flex items-center">
+                    <span className="flex items-center justify-center">
                       <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -211,20 +214,37 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Back to Dashboard */}
-        <div className="text-center mt-12">
+        {/* Navigation */}
+        <div className="text-center mt-12 space-y-4">
           <Link
             href="/"
-            className="inline-flex items-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200"
+            className="inline-flex items-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200 mr-4"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Back to Dashboard
           </Link>
+          <button
+            onClick={logout}
+            className="inline-flex items-center px-8 py-4 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Logout
+          </button>
         </div>
       </div>
       <Footer />
     </div>
+  );
+}
+
+export default function Admin() {
+  return (
+    <ProtectedRoute requiredLevel="admin">
+      <AdminContent />
+    </ProtectedRoute>
   );
 }
