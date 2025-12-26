@@ -1,8 +1,10 @@
+import packageJson from '../../package.json';
+
 export default function Footer() {
-  const companyName = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Intranet Dashboard';
   const companyShortCode = process.env.NEXT_PUBLIC_COMPANY_SHORT_CODE || 'Company';
   const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'admin@example.com';
   const currentYear = new Date().getFullYear();
+  const version = packageJson.version;
 
   return (
     <footer className="bg-white border-t border-gray-200 mt-16">
@@ -21,6 +23,9 @@ export default function Footer() {
             >
               Contact Support
             </a>
+          </p>
+          <p className="text-gray-400 text-xs font-mono">
+            v{version}
           </p>
         </div>
       </div>
